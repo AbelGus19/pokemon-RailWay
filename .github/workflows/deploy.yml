@@ -18,9 +18,9 @@ jobs:
       - name: Build Docker image
         run: docker build -t pokemon-app:${{ github.sha }} .
 
-      - name: Deploy to Railway 
-        run: |
-          railway link ${{ secrets.RAILWAY_PROJECT_ID }}
-          railway up --detach
+      - name: Deploy to Railway (without .railway/project)
+        run: railway up --detach
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+
