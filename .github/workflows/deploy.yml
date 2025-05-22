@@ -15,15 +15,12 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Create .railway/project file dynamically
-        run: |
-          mkdir -p .railway
-          echo "project: ${{ secrets.RAILWAY_PROJECT_ID }}" > .railway/project
-
       - name: Build Docker image
         run: docker build -t pokemon-app:${{ github.sha }} .
 
-      - name: Deploy to Railway
-        run: railway up --detach
+      - name: Deploy to Railway 
+        run: |
+          railway link ${{ secrets.RAILWAY_PROJECT_ID }}
+          railway up --detach
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
