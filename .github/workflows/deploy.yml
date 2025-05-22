@@ -1,16 +1,21 @@
-name: Deploy to Railway
+name: Deploy to Railway (Docker)
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    container: ghcr.io/railwayapp/cli:latest
-    env:
-      SVC_ID: pokemon_RailwayActions   # Cambia esto al nombre o ID de tu servicio
-      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
     steps:
-      - uses: actions/checkout@v3
-      - run: railway up --service=${{ env.SVC_ID }}
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        run: railway up
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

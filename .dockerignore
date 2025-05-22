@@ -1,0 +1,9 @@
+# Ignora Git y configuraciones de entorno locales
+.git
+.gitignore
+.github
+
+# Archivos temporales o del sistema
+.DS_Store
+*.log
+*.env
