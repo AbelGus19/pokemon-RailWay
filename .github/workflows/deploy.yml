@@ -1,5 +1,5 @@
 # .github/workflows/railway.yml
-name: Deploy to Railway
+name: Deploy to Railway (Docker)
 
 on:
   push:
@@ -9,13 +9,22 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      
+      - name: Checkout repository
         uses: actions/checkout@v3
 
+      
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Deploy
-        run: railway up --service-name "pokemon-app" --detach
+      
+      - name: Build Docker image
+        run: docker build -t pokemon-app:${{ github.sha }} .
+
+      
+      - name: Deploy to Railway
+        run: |
+          railway login --token ${{ secrets.RAILWAY_TOKEN }}
+          railway up --service-name "pokemon-app" --detach
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
