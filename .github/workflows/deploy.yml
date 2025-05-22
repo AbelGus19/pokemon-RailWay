@@ -17,5 +17,5 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         with:
-          service: "nombre-del-servicio-en-railway"
+          service: "pokemon_RailwayActions"
           detach: true
