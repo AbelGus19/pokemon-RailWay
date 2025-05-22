@@ -21,11 +21,6 @@ jobs:
           mkdir -p .railway
           echo "project: ${{ secrets.RAILWAY_PROJECT_ID }}" > .railway/project
 
-      - name: Railway Login
-        run: railway login
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
       - name: Build Docker image
         run: docker build -t pokemon-app:${{ github.sha }} .
 
