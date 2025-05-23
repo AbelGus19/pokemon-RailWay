@@ -9,13 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up Node.js (required for Railway CLI)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
       - name: Deploy to Railway
-        run: railway up
+        run: railway up --service static-html
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
