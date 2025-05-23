@@ -17,9 +17,9 @@ jobs:
     - name: Deploy to Railway
       run: |
         if [ -z "$RAILWAY_ENVIRONMENT" ]; then
-          railway up --project $RAILWAY_PROJECT --service pokemon-RailWay
+          railway up --service pokemon-RailWay
         else
-          railway up --project $RAILWAY_PROJECT --environment $RAILWAY_ENVIRONMENT --service pokemon-RailWay
+          railway up --environment $RAILWAY_ENVIRONMENT --service pokemon-RailWay
         fi
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
