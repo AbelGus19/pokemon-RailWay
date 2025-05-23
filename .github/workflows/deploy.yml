@@ -9,19 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Install Railway CLI
-      run: npm install -g @railway/cli
+      - name: Deploy to Railway
+        uses: bervProject/railway-deploy@main
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        with:
+          service: "pokemon-RailWay"  # el nombre exacto de tu servicio Railway
 
-    - name: Deploy to Railway
-      run: |
-        if [ -z "$RAILWAY_ENVIRONMENT" ]; then
-          railway up --service pokemon-RailWay
-        else
-          railway up --environment $RAILWAY_ENVIRONMENT --service pokemon-RailWay
-        fi
-      env:
-        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        RAILWAY_PROJECT: ${{ secrets.RAILWAY_PROJECT }}
-        RAILWAY_ENVIRONMENT: ${{ secrets.RAILWAY_ENVIRONMENT }}
