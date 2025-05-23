@@ -15,7 +15,13 @@ jobs:
       run: npm install -g @railway/cli
 
     - name: Deploy to Railway
-      run: railway up --service pokemon-RailWay
+      run: |
+        if [ -z "$RAILWAY_ENVIRONMENT" ]; then
+          railway up --project $RAILWAY_PROJECT --service pokemon-RailWay
+        else
+          railway up --project $RAILWAY_PROJECT --environment $RAILWAY_ENVIRONMENT --service pokemon-RailWay
+        fi
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         RAILWAY_PROJECT: ${{ secrets.RAILWAY_PROJECT }}
+        RAILWAY_ENVIRONMENT: ${{ secrets.RAILWAY_ENVIRONMENT }}
