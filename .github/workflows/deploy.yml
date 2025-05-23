@@ -1,31 +1,21 @@
-name: Deploy Docker to Railway
+name: Deploy to Railway
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar el repositorio
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Instalar Railway CLI
-        run: |
-          curl -fsSL https://railway.app/install.sh | sh
-          echo "$HOME/.railway/bin" >> $GITHUB_PATH
-
-      - name: Autenticarse en Railway
+      - name: Deploy to Railway
+        uses: bervProject/railway-deploy@main
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway login --token $RAILWAY_TOKEN
-
-      - name: Desplegar con contenedor Docker a Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service pokemon-RailWay
+        with:
+          service: "pokemon-RailWay"
 
 
